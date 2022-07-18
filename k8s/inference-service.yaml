@@ -1,0 +1,15 @@
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "income"
+spec:
+  predictor:
+    sklearn:
+      storageUri: https://github.com/ruivieira/kserve-trustyai-explainer/blob/predictor-model/predictor/model.joblib?raw=true
+  explainer:
+    containers:
+      - name: kserve-container
+        image: ruivieira/kserve-trustyai-explainer:latest
+        imagePullPolicy: Never
+        command:
+          - "--model_name income"

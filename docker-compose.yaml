@@ -1,0 +1,28 @@
+---
+version: '3'
+services:
+
+  predictor:
+    container_name: predictor
+    image: ruivieira/kserver-trustyai-predictor
+    build:      
+      context: ./
+      dockerfile: ./predictor.Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: "python"
+
+  explainer:
+    container_name: explainer
+    image: ruivieira/kserver-trustyai-explainer
+    ports:
+      - "8888:8080"
+    build:      
+      context: ./
+      dockerfile: ./explainer.Dockerfile
+    depends_on:
+      - predictor
+    command: --predictor_host predictor:8080 --model_name income
+    environment:
+      - PYTHONUNBUFFERED=1
