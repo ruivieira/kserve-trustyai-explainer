@@ -19,7 +19,9 @@ setup(
         "argparse >= 1.4.0",
         "numpy >= 1.8.2",
         "nest_asyncio>=1.4.0",
-        "Jinja2"
+        "Jinja2",
+        "pandas",
+        "matplotlib"
     ],
     tests_require=tests_require,
     extras_require={'test': tests_require}
